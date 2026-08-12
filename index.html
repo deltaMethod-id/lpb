@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="LPB — Landing Page Builder. Buat landing page tanpa perlu coding."
+  >
+
+  <meta
+    name="theme-color"
+    content="#0a0a0a"
+  >
+
+  <title>LPB — Landing Page Builder</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      background: #080808;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .container {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    /* =========================
+       NAVBAR
+    ========================= */
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      background: rgba(8,8,8,0.78);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .nav-inner {
+      height: 72px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 10px;
+
+      background: #ffffff;
+      color: #000000;
+
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+
+      color: #a1a1aa;
+      font-size: 14px;
+    }
+
+    .nav-links a {
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: #ffffff;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      border: 0;
+      cursor: pointer;
+
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      min-height: 42px;
+      padding: 0 18px;
+
+      border-radius: 10px;
+
+      font-size: 14px;
+      font-weight: 700;
+
+      transition:
+        transform 0.2s ease,
+        opacity 0.2s ease,
+        background 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: #ffffff;
+    }
+
+    .btn-primary {
+      background: #ffffff;
+      color: #000000;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.88;
+    }
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+      position: relative;
+      min-height: 100vh;
+
+      display: flex;
+      align-items: center;
+
+      padding: 150px 0 100px;
+
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+
+      position: absolute;
+      width: 700px;
+      height: 700px;
+
+      left: 50%;
+      top: 40%;
+
+      transform: translate(-50%, -50%);
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(255,255,255,0.08),
+          transparent 68%
+        );
+
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+
+      max-width: 850px;
+      margin: 0 auto;
+
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+
+      padding: 8px 13px;
+
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 999px;
+
+      background: rgba(255,255,255,0.035);
+
+      color: #b4b4b8;
+      font-size: 13px;
+    }
+
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+
+      border-radius: 50%;
+      background: #ffffff;
+    }
+
+    .hero h1 {
+      margin-top: 26px;
+
+      font-size: clamp(48px, 8vw, 88px);
+      line-height: 0.98;
+      letter-spacing: -4px;
+      font-weight: 900;
+    }
+
+    .hero h1 span {
+      color: #77777d;
+    }
+
+    .hero-description {
+      max-width: 650px;
+      margin: 28px auto 0;
+
+      color: #a1a1aa;
+
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+
+      margin-top: 34px;
+    }
+
+    .hero-actions .btn {
+      min-height: 48px;
+      padding: 0 22px;
+    }
+
+    /* =========================
+       BUILDER PREVIEW
+    ========================= */
+
+    .preview-wrapper {
+      margin-top: 80px;
+
+      position: relative;
+    }
+
+    .preview {
+      width: 100%;
+      min-height: 430px;
+
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 18px;
+
+      background: #111111;
+
+      box-shadow:
+        0 30px 100px rgba(0,0,0,0.45);
+
+      overflow: hidden;
+    }
+
+    .preview-bar {
+      height: 44px;
+
+      display: flex;
+      align-items: center;
+      gap: 7px;
+
+      padding: 0 16px;
+
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+
+      background: #0d0d0d;
+    }
+
+    .window-dot {
+      width: 9px;
+      height: 9px;
+
+      border-radius: 50%;
+
+      background: #333333;
+    }
+
+    .preview-body {
+      display: grid;
+      grid-template-columns: 190px 1fr 220px;
+
+      min-height: 385px;
+    }
+
+    .preview-sidebar,
+    .preview-properties {
+      padding: 18px;
+
+      background: #0d0d0d;
+    }
+
+    .preview-sidebar {
+      border-right: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .preview-properties {
+      border-left: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .preview-label {
+      margin-bottom: 12px;
+
+      color: #77777d;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .object {
+      padding: 10px 12px;
+      margin-bottom: 7px;
+
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px;
+
+      color: #aaaab0;
+      font-size: 12px;
+
+      background: rgba(255,255,255,0.025);
+    }
+
+    .object.active {
+      color: #ffffff;
+      border-color: rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.08);
+    }
+
+    .canvas {
+      padding: 30px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background:
+        linear-gradient(
+          45deg,
+          rgba(255,255,255,0.015) 25%,
+          transparent 25%,
+          transparent 75%,
+          rgba(255,255,255,0.015) 75%
+        );
+
+      background-size: 24px 24px;
+    }
+
+    .fake-page {
+      width: 80%;
+      min-height: 280px;
+
+      padding: 35px;
+
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+
+      background: #151515;
+
+      text-align: center;
+    }
+
+    .fake-page h3 {
+      font-size: 27px;
+      letter-spacing: -1px;
+    }
+
+    .fake-page p {
+      margin: 13px auto 20px;
+
+      max-width: 320px;
+
+      color: #77777d;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .fake-button {
+      display: inline-flex;
+
+      padding: 9px 16px;
+
+      border-radius: 7px;
+
+      background: #ffffff;
+      color: #000000;
+
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .property {
+      margin-bottom: 14px;
+    }
+
+    .property span {
+      display: block;
+
+      margin-bottom: 7px;
+
+      color: #77777d;
+      font-size: 10px;
+    }
+
+    .property-box {
+      height: 30px;
+
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 6px;
+
+      background: rgba(255,255,255,0.025);
+    }
+
+    /* =========================
+       FEATURES
+    ========================= */
+
+    .section {
+      padding: 110px 0;
+    }
+
+    .section-heading {
+      max-width: 650px;
+      margin-bottom: 48px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(32px, 5vw, 52px);
+      letter-spacing: -2px;
+    }
+
+    .section-heading p {
+      margin-top: 14px;
+
+      color: #8f8f96;
+      line-height: 1.7;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .feature {
+      padding: 28px;
+
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px;
+
+      background: rgba(255,255,255,0.025);
+
+      transition:
+        transform 0.2s ease,
+        border-color 0.2s ease;
+    }
+
+    .feature:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255,255,255,0.16);
+    }
+
+    .feature-icon {
+      width: 42px;
+      height: 42px;
+
+      display: grid;
+      place-items: center;
+
+      margin-bottom: 22px;
+
+      border-radius: 10px;
+
+      background: #ffffff;
+      color: #000000;
+
+      font-size: 18px;
+    }
+
+    .feature h3 {
+      font-size: 18px;
+    }
+
+    .feature p {
+      margin-top: 10px;
+
+      color: #85858c;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    /* =========================
+       CTA
+    ========================= */
+
+    .cta {
+      padding: 100px 30px;
+
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 20px;
+
+      background:
+        radial-gradient(
+          circle at center,
+          rgba(255,255,255,0.06),
+          transparent 65%
+        );
+
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: clamp(32px, 5vw, 56px);
+      letter-spacing: -2px;
+    }
+
+    .cta p {
+      max-width: 520px;
+      margin: 16px auto 28px;
+
+      color: #88888f;
+      line-height: 1.7;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      padding: 35px 0;
+
+      border-top: 1px solid rgba(255,255,255,0.06);
+
+      color: #66666c;
+      font-size: 13px;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 850px) {
+      .nav-links {
+        display: none;
+      }
+
+      .preview-body {
+        grid-template-columns: 150px 1fr;
+      }
+
+      .preview-properties {
+        display: none;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        width: min(100% - 28px, 1120px);
+      }
+
+      .nav-inner {
+        height: 64px;
+      }
+
+      .nav-actions .btn-ghost {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 125px;
+      }
+
+      .hero h1 {
+        letter-spacing: -2.5px;
+      }
+
+      .hero-description {
+        font-size: 15px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .hero-actions .btn {
+        width: 100%;
+      }
+
+      .preview-body {
+        grid-template-columns: 1fr;
+      }
+
+      .preview-sidebar {
+        display: none;
+      }
+
+      .canvas {
+        padding: 15px;
+      }
+
+      .fake-page {
+        width: 100%;
+        padding: 25px 15px;
+      }
+
+      .section {
+        padding: 80px 0;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="container nav-inner">
+
+      <a href="index.html" class="logo">
+        <span class="logo-mark">LP</span>
+        <span>LPB</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#how-it-works">How it works</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="dashboard.html" class="btn btn-ghost">
+          Dashboard
+        </a>
+
+        <a href="build.html" class="btn btn-primary">
+          Start Building
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+
+  <!-- HERO -->
+  <main>
+
+    <section class="hero">
+      <div class="container">
+
+        <div class="hero-content">
+
+          <div class="badge">
+            <span class="badge-dot"></span>
+            No coding required
+          </div>
+
+          <h1>
+            Build landing pages
+            <span>without code.</span>
+          </h1>
+
+          <p class="hero-description">
+            LPB adalah visual Landing Page Builder yang memungkinkan
+            kamu membuat website dengan menyusun object secara langsung
+            tanpa harus menulis kode.
+          </p>
+
+          <div class="hero-actions">
+
+            <a
+              href="build.html"
+              class="btn btn-primary"
+            >
+              Start Building →
+            </a>
+
+            <a
+              href="#features"
+              class="btn btn-ghost"
+            >
+              Explore Features
+            </a>
+
+          </div>
+
+        </div>
+
+
+        <!-- BUILDER PREVIEW -->
+        <div class="preview-wrapper">
+
+          <div class="preview">
+
+            <div class="preview-bar">
+              <span class="window-dot"></span>
+              <span class="window-dot"></span>
+              <span class="window-dot"></span>
+            </div>
+
+            <div class="preview-body">
+
+              <aside class="preview-sidebar">
+
+                <div class="preview-label">
+                  Objects
+                </div>
+
+                <div class="object active">
+                  Hero Section
+                </div>
+
+                <div class="object">
+                  Text
+                </div>
+
+                <div class="object">
+                  Button
+                </div>
+
+                <div class="object">
+                  Image
+                </div>
+
+                <div class="object">
+                  Container
+                </div>
+
+                <div class="object">
+                  Footer
+                </div>
+
+              </aside>
+
+
+              <div class="canvas">
+
+                <div class="fake-page">
+
+                  <h3>
+                    Your Landing Page
+                  </h3>
+
+                  <p>
+                    Add objects, customize them,
+                    and build your page visually.
+                  </p>
+
+                  <span class="fake-button">
+                    Get Started
+                  </span>
+
+                </div>
+
+              </div>
+
+
+              <aside class="preview-properties">
+
+                <div class="preview-label">
+                  Properties
+                </div>
+
+                <div class="property">
+                  <span>Width</span>
+                  <div class="property-box"></div>
+                </div>
+
+                <div class="property">
+                  <span>Height</span>
+                  <div class="property-box"></div>
+                </div>
+
+                <div class="property">
+                  <span>Padding</span>
+                  <div class="property-box"></div>
+                </div>
+
+                <div class="property">
+                  <span>Border Radius</span>
+                  <div class="property-box"></div>
+                </div>
+
+              </aside>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- FEATURES -->
+    <section
+      class="section"
+      id="features"
+    >
+      <div class="container">
+
+        <div class="section-heading">
+          <h2>
+            Everything you need
+            to build.
+          </h2>
+
+          <p>
+            Buat halaman dari object-object yang bisa
+            kamu atur langsung melalui visual editor.
+          </p>
+        </div>
+
+
+        <div class="features">
+
+          <article class="feature">
+
+            <div class="feature-icon">
+              +
+            </div>
+
+            <h3>
+              Object Builder
+            </h3>
+
+            <p>
+              Tambahkan text, button, image, section,
+              container, dan berbagai object lainnya.
+            </p>
+
+          </article>
+
+
+          <article class="feature">
+
+            <div class="feature-icon">
+              ⚙
+            </div>
+
+            <h3>
+              Visual Editor
+            </h3>
+
+            <p>
+              Ubah ukuran, spacing, warna, typography,
+              dan properti lainnya tanpa coding.
+            </p>
+
+          </article>
+
+
+          <article class="feature">
+
+            <div class="feature-icon">
+              ↓
+            </div>
+
+            <h3>
+              Export
+            </h3>
+
+            <p>
+              Setelah selesai, hasil landing page
+              bisa diproses dan diekspor.
+            </p>
+
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- HOW IT WORKS -->
+    <section
+      class="section"
+      id="how-it-works"
+    >
+      <div class="container">
+
+        <div class="section-heading">
+
+          <h2>
+            Build it your way.
+          </h2>
+
+          <p>
+            Pilih object → masukkan ke canvas →
+            atur properties → selesai.
+          </p>
+
+        </div>
+
+        <div class="cta">
+
+          <h2>
+            Ready to build?
+          </h2>
+
+          <p>
+            Mulai membuat landing page pertamamu
+            dengan LPB.
+          </p>
+
+          <a
+            href="build.html"
+            class="btn btn-primary"
+          >
+            Open Builder →
+          </a>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container footer-inner">
+
+      <span>
+        © 2026 LPB — Landing Page Builder
+      </span>
+
+      <a href="downloads.html">
+        Downloads
+      </a>
+
+    </div>
+  </footer>
+
+
+  <script src="app-main.js"></script>
+
+</body>
+</html>
