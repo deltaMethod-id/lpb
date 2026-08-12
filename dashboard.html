@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="LPB Dashboard — Manage your landing page projects."
+  >
+
+  <meta
+    name="theme-color"
+    content="#080808"
+  >
+
+  <title>Dashboard — LPB</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      background: #080808;
+      color: #ffffff;
+
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    /* =========================
+       NAVBAR
+    ========================= */
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+
+      z-index: 1000;
+
+      height: 70px;
+
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+
+      background: rgba(8,8,8,0.82);
+
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .nav-inner {
+      height: 100%;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      font-size: 19px;
+      font-weight: 850;
+    }
+
+    .logo-mark {
+      width: 33px;
+      height: 33px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 9px;
+
+      background: #ffffff;
+      color: #000000;
+
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .nav-center {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-link {
+      padding: 8px 12px;
+
+      border-radius: 8px;
+
+      color: #85858c;
+
+      font-size: 13px;
+
+      transition:
+        color 0.2s ease,
+        background 0.2s ease;
+    }
+
+    .nav-link:hover {
+      color: #ffffff;
+      background: rgba(255,255,255,0.05);
+    }
+
+    .nav-link.active {
+      color: #ffffff;
+      background: rgba(255,255,255,0.07);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .icon-button {
+      width: 38px;
+      height: 38px;
+
+      display: grid;
+      place-items: center;
+
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 9px;
+
+      background: rgba(255,255,255,0.03);
+      color: #aaaaaf;
+
+      cursor: pointer;
+
+      transition:
+        background 0.2s ease,
+        color 0.2s ease;
+    }
+
+    .icon-button:hover {
+      background: rgba(255,255,255,0.08);
+      color: #ffffff;
+    }
+
+    .profile {
+      width: 34px;
+      height: 34px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 50%;
+
+      background: #242424;
+
+      color: #ffffff;
+
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    /* =========================
+       MAIN
+    ========================= */
+
+    main {
+      padding: 118px 0 70px;
+    }
+
+    .welcome {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+
+      gap: 30px;
+
+      margin-bottom: 34px;
+    }
+
+    .welcome h1 {
+      font-size: clamp(30px, 5vw, 44px);
+      letter-spacing: -2px;
+    }
+
+    .welcome p {
+      margin-top: 9px;
+
+      color: #77777e;
+
+      font-size: 14px;
+    }
+
+    .primary-button {
+      min-height: 44px;
+
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      gap: 8px;
+
+      padding: 0 18px;
+
+      border: 0;
+      border-radius: 9px;
+
+      background: #ffffff;
+      color: #000000;
+
+      font-size: 13px;
+      font-weight: 800;
+
+      cursor: pointer;
+
+      transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+    }
+
+    .primary-button:hover {
+      transform: translateY(-1px);
+      opacity: 0.88;
+    }
+
+    /* =========================
+       STATS
+    ========================= */
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+
+      gap: 12px;
+
+      margin-bottom: 50px;
+    }
+
+    .stat {
+      padding: 22px;
+
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 13px;
+
+      background: rgba(255,255,255,0.025);
+    }
+
+    .stat-label {
+      color: #707077;
+
+      font-size: 12px;
+    }
+
+    .stat-value {
+      margin-top: 9px;
+
+      font-size: 27px;
+      font-weight: 800;
+
+      letter-spacing: -1px;
+    }
+
+    /* =========================
+       SECTION HEADER
+    ========================= */
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      margin-bottom: 17px;
+    }
+
+    .section-header h2 {
+      font-size: 19px;
+      letter-spacing: -0.5px;
+    }
+
+    .view-all {
+      color: #77777e;
+      font-size: 12px;
+
+      transition: color 0.2s ease;
+    }
+
+    .view-all:hover {
+      color: #ffffff;
+    }
+
+    /* =========================
+       PROJECTS
+    ========================= */
+
+    .projects {
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+      gap: 14px;
+
+      margin-bottom: 55px;
+    }
+
+    .project {
+      min-width: 0;
+
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 13px;
+
+      background: #0d0d0d;
+
+      overflow: hidden;
+
+      transition:
+        transform 0.2s ease,
+        border-color 0.2s ease;
+    }
+
+    .project:hover {
+      transform: translateY(-3px);
+
+      border-color:
+        rgba(255,255,255,0.15);
+    }
+
+    .project-preview {
+      position: relative;
+
+      height: 165px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 20px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #141414,
+          #0b0b0b
+        );
+    }
+
+    .project-preview::after {
+      content: "";
+
+      position: absolute;
+      inset: 0;
+
+      background:
+        linear-gradient(
+          135deg,
+          transparent,
+          rgba(255,255,255,0.025)
+        );
+
+      pointer-events: none;
+    }
+
+    .fake-site {
+      width: 78%;
+      height: 105px;
+
+      padding: 16px;
+
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 7px;
+
+      background: #181818;
+    }
+
+    .fake-site-title {
+      width: 65%;
+      height: 9px;
+
+      border-radius: 3px;
+
+      background: #ffffff;
+    }
+
+    .fake-site-text {
+      width: 85%;
+      height: 5px;
+
+      margin-top: 10px;
+
+      border-radius: 3px;
+
+      background: #444444;
+    }
+
+    .fake-site-text.small {
+      width: 58%;
+      margin-top: 5px;
+    }
+
+    .fake-site-button {
+      width: 48px;
+      height: 17px;
+
+      margin-top: 13px;
+
+      border-radius: 4px;
+
+      background: #ffffff;
+    }
+
+    .project-content {
+      padding: 17px;
+    }
+
+    .project-title {
+      font-size: 14px;
+      font-weight: 750;
+    }
+
+    .project-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      margin-top: 8px;
+
+      color: #696970;
+
+      font-size: 11px;
+    }
+
+    .project-actions {
+      display: flex;
+      gap: 7px;
+
+      margin-top: 15px;
+    }
+
+    .project-button {
+      flex: 1;
+
+      height: 34px;
+
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 7px;
+
+      background: rgba(255,255,255,0.03);
+      color: #aaaaaf;
+
+      font-size: 11px;
+      font-weight: 700;
+
+      cursor: pointer;
+
+      transition:
+        background 0.2s ease,
+        color 0.2s ease;
+    }
+
+    .project-button:hover {
+      background: rgba(255,255,255,0.08);
+      color: #ffffff;
+    }
+
+    /* =========================
+       TEMPLATES
+    ========================= */
+
+    .templates {
+      display: grid;
+
+      grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+      gap: 12px;
+    }
+
+    .template {
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+
+      background: #0d0d0d;
+
+      overflow: hidden;
+
+      cursor: pointer;
+
+      transition:
+        transform 0.2s ease,
+        border-color 0.2s ease;
+    }
+
+    .template:hover {
+      transform: translateY(-3px);
+
+      border-color:
+        rgba(255,255,255,0.15);
+    }
+
+    .template-preview {
+      height: 120px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 15px;
+
+      background: #121212;
+    }
+
+    .template-ui {
+      width: 85%;
+      height: 82px;
+
+      padding: 12px;
+
+      border-radius: 6px;
+
+      background: #1c1c1c;
+    }
+
+    .template-line {
+      width: 55%;
+      height: 6px;
+
+      border-radius: 2px;
+
+      background: #eeeeee;
+    }
+
+    .template-line:nth-child(2) {
+      width: 80%;
+      height: 4px;
+
+      margin-top: 8px;
+
+      background: #444444;
+    }
+
+    .template-block {
+      width: 45%;
+      height: 18px;
+
+      margin-top: 11px;
+
+      border-radius: 3px;
+
+      background: #eeeeee;
+    }
+
+    .template-name {
+      padding: 13px 14px;
+
+      color: #b1b1b7;
+
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    /* =========================
+       EMPTY STATE
+    ========================= */
+
+    .empty-project {
+      display: none;
+
+      padding: 50px 20px;
+
+      border: 1px dashed rgba(255,255,255,0.1);
+      border-radius: 13px;
+
+      color: #77777e;
+
+      text-align: center;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      padding: 30px 0;
+
+      border-top:
+        1px solid rgba(255,255,255,0.06);
+
+      color: #66666c;
+
+      font-size: 12px;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 20px;
+    }
+
+    footer a:hover {
+      color: #ffffff;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 950px) {
+      .projects {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+      }
+
+      .templates {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+      }
+
+      .nav-center {
+        display: none;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .container {
+        width: min(100% - 28px, 1180px);
+      }
+
+      main {
+        padding-top: 100px;
+      }
+
+      .welcome {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .welcome .primary-button {
+        width: 100%;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .projects {
+        grid-template-columns: 1fr;
+      }
+
+      .templates {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-right .icon-button {
+        display: none;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================
+       NAVBAR
+  ========================= -->
+
+  <header class="navbar">
+    <div class="container nav-inner">
+
+      <a href="index.html" class="logo">
+        <span class="logo-mark">LP</span>
+        <span>LPB</span>
+      </a>
+
+      <nav class="nav-center">
+
+        <a
+          href="dashboard.html"
+          class="nav-link active"
+        >
+          Dashboard
+        </a>
+
+        <a
+          href="build.html"
+          class="nav-link"
+        >
+          Builder
+        </a>
+
+        <a
+          href="downloads.html"
+          class="nav-link"
+        >
+          Downloads
+        </a>
+
+      </nav>
+
+      <div class="nav-right">
+
+        <button
+          class="icon-button"
+          id="newProjectTop"
+          title="New Project"
+        >
+          +
+        </button>
+
+        <div class="profile">
+          LP
+        </div>
+
+      </div>
+
+    </div>
+  </header>
+
+
+  <!-- =========================
+       MAIN
+  ========================= -->
+
+  <main>
+
+    <div class="container">
+
+      <!-- WELCOME -->
+
+      <section class="welcome">
+
+        <div>
+          <h1>
+            Dashboard
+          </h1>
+
+          <p>
+            Manage your landing page projects.
+          </p>
+        </div>
+
+        <button
+          class="primary-button"
+          id="newProject"
+        >
+          + New Project
+        </button>
+
+      </section>
+
+
+      <!-- STATS -->
+
+      <section class="stats">
+
+        <div class="stat">
+
+          <div class="stat-label">
+            Total Projects
+          </div>
+
+          <div
+            class="stat-value"
+            id="projectCount"
+          >
+            3
+          </div>
+
+        </div>
+
+        <div class="stat">
+
+          <div class="stat-label">
+            Published
+          </div>
+
+          <div class="stat-value">
+            1
+          </div>
+
+        </div>
+
+        <div class="stat">
+
+          <div class="stat-label">
+            Drafts
+          </div>
+
+          <div class="stat-value">
+            2
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- PROJECTS -->
+
+      <section>
+
+        <div class="section-header">
+
+          <h2>
+            Recent Projects
+          </h2>
+
+          <a
+            href="#"
+            class="view-all"
+          >
+            View all
+          </a>
+
+        </div>
+
+
+        <div class="projects" id="projects">
+
+          <!-- PROJECT 1 -->
+
+          <article class="project">
+
+            <div class="project-preview">
+
+              <div class="fake-site">
+
+                <div class="fake-site-title"></div>
+
+                <div class="fake-site-text"></div>
+
+                <div class="fake-site-text small"></div>
+
+                <div class="fake-site-button"></div>
+
+              </div>
+
+            </div>
+
+            <div class="project-content">
+
+              <div class="project-title">
+                My Landing Page
+              </div>
+
+              <div class="project-meta">
+                <span>
+                  Edited recently
+                </span>
+
+                <span>
+                  Draft
+                </span>
+              </div>
+
+              <div class="project-actions">
+
+                <button
+                  class="project-button edit-project"
+                >
+                  Edit
+                </button>
+
+                <button
+                  class="project-button"
+                  onclick="alert('Project options')"
+                >
+                  Options
+                </button>
+
+              </div>
+
+            </div>
+
+          </article>
+
+
+          <!-- PROJECT 2 -->
+
+          <article class="project">
+
+            <div class="project-preview">
+
+              <div class="fake-site">
+
+                <div class="fake-site-title"></div>
+
+                <div class="fake-site-text"></div>
+
+                <div class="fake-site-text small"></div>
+
+                <div class="fake-site-button"></div>
+
+              </div>
+
+            </div>
+
+            <div class="project-content">
+
+              <div class="project-title">
+                Product Website
+              </div>
+
+              <div class="project-meta">
+
+                <span>
+                  2 days ago
+                </span>
+
+                <span>
+                  Draft
+                </span>
+
+              </div>
+
+              <div class="project-actions">
+
+                <button
+                  class="project-button edit-project"
+                >
+                  Edit
+                </button>
+
+                <button
+                  class="project-button"
+                  onclick="alert('Project options')"
+                >
+                  Options
+                </button>
+
+              </div>
+
+            </div>
+
+          </article>
+
+
+          <!-- PROJECT 3 -->
+
+          <article class="project">
+
+            <div class="project-preview">
+
+              <div class="fake-site">
+
+                <div class="fake-site-title"></div>
+
+                <div class="fake-site-text"></div>
+
+                <div class="fake-site-text small"></div>
+
+                <div class="fake-site-button"></div>
+
+              </div>
+
+            </div>
+
+            <div class="project-content">
+
+              <div class="project-title">
+                Portfolio
+              </div>
+
+              <div class="project-meta">
+
+                <span>
+                  5 days ago
+                </span>
+
+                <span>
+                  Published
+                </span>
+
+              </div>
+
+              <div class="project-actions">
+
+                <button
+                  class="project-button edit-project"
+                >
+                  Edit
+                </button>
+
+                <button
+                  class="project-button"
+                  onclick="alert('Project options')"
+                >
+                  Options
+                </button>
+
+              </div>
+
+            </div>
+
+          </article>
+
+        </div>
+
+
+        <div
+          class="empty-project"
+          id="emptyProject"
+        >
+          No projects yet.
+        </div>
+
+      </section>
+
+
+      <!-- TEMPLATES -->
+
+      <section>
+
+        <div class="section-header">
+
+          <h2>
+            Start from a Template
+          </h2>
+
+          <span class="view-all">
+            Choose a template
+          </span>
+
+        </div>
+
+
+        <div class="templates">
+
+          <article
+            class="template"
+            data-template="Startup"
+          >
+
+            <div class="template-preview">
+
+              <div class="template-ui">
+
+                <div class="template-line"></div>
+
+                <div class="template-line"></div>
+
+                <div class="template-block"></div>
+
+              </div>
+
+            </div>
+
+            <div class="template-name">
+              Startup
+            </div>
+
+          </article>
+
+
+          <article
+            class="template"
+            data-template="Portfolio"
+          >
+
+            <div class="template-preview">
+
+              <div class="template-ui">
+
+                <div class="template-line"></div>
+
+                <div class="template-line"></div>
+
+                <div class="template-block"></div>
+
+              </div>
+
+            </div>
+
+            <div class="template-name">
+              Portfolio
+            </div>
+
+          </article>
+
+
+          <article
+            class="template"
+            data-template="Product"
+          >
+
+            <div class="template-preview">
+
+              <div class="template-ui">
+
+                <div class="template-line"></div>
+
+                <div class="template-line"></div>
+
+                <div class="template-block"></div>
+
+              </div>
+
+            </div>
+
+            <div class="template-name">
+              Product
+            </div>
+
+          </article>
+
+
+          <article
+            class="template"
+            data-template="Business"
+          >
+
+            <div class="template-preview">
+
+              <div class="template-ui">
+
+                <div class="template-line"></div>
+
+                <div class="template-line"></div>
+
+                <div class="template-block"></div>
+
+              </div>
+
+            </div>
+
+            <div class="template-name">
+              Business
+            </div>
+
+          </article>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+
+  <!-- =========================
+       FOOTER
+  ========================= -->
+
+  <footer>
+
+    <div class="container footer-inner">
+
+      <span>
+        © 2026 LPB — Landing Page Builder
+      </span>
+
+      <a href="downloads.html">
+        Downloads
+      </a>
+
+    </div>
+
+  </footer>
+
+
+  <script src="app-main.js"></script>
+  <script src="app-post.js"></script>
+
+</body>
+</html>
