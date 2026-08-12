@@ -1,0 +1,1734 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="LPB Builder — Create landing pages visually without coding."
+  >
+
+  <meta
+    name="theme-color"
+    content="#080808"
+  >
+
+  <title>Builder — LPB</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #080808;
+      --panel: #0d0d0d;
+      --panel-2: #111111;
+      --border: rgba(255,255,255,0.08);
+      --border-hover: rgba(255,255,255,0.16);
+      --text: #ffffff;
+      --muted: #77777e;
+      --muted-2: #99999f;
+      --hover: rgba(255,255,255,0.06);
+      --selected: rgba(255,255,255,0.09);
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+
+      overflow: hidden;
+
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+    }
+
+    /* =========================
+       TOP BAR
+    ========================= */
+
+    .topbar {
+      height: 58px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 0 14px;
+
+      border-bottom: 1px solid var(--border);
+
+      background: #090909;
+
+      position: relative;
+      z-index: 100;
+    }
+
+    .top-left,
+    .top-center,
+    .top-right {
+      display: flex;
+      align-items: center;
+    }
+
+    .top-left {
+      gap: 12px;
+    }
+
+    .top-center {
+      gap: 5px;
+    }
+
+    .top-right {
+      gap: 7px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      color: #ffffff;
+
+      font-size: 15px;
+      font-weight: 850;
+    }
+
+    .brand-mark {
+      width: 29px;
+      height: 29px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 7px;
+
+      background: #ffffff;
+      color: #000000;
+
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .project-name {
+      max-width: 180px;
+
+      padding-left: 12px;
+
+      border-left: 1px solid var(--border);
+
+      color: var(--muted-2);
+
+      font-size: 12px;
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .top-button {
+      height: 34px;
+      min-width: 34px;
+
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 0 10px;
+
+      border: 1px solid transparent;
+      border-radius: 7px;
+
+      background: transparent;
+      color: var(--muted-2);
+
+      cursor: pointer;
+
+      font-size: 12px;
+      font-weight: 700;
+
+      transition:
+        color .15s ease,
+        background .15s ease,
+        border-color .15s ease;
+    }
+
+    .top-button:hover {
+      color: #ffffff;
+      background: var(--hover);
+    }
+
+    .top-button.active {
+      color: #ffffff;
+      background: var(--selected);
+      border-color: var(--border);
+    }
+
+    .top-button.primary {
+      padding: 0 14px;
+
+      background: #ffffff;
+      color: #000000;
+    }
+
+    .top-button.primary:hover {
+      background: #dddddd;
+    }
+
+    .save-status {
+      color: #66666d;
+      font-size: 10px;
+    }
+
+    /* =========================
+       BUILDER
+    ========================= */
+
+    .builder {
+      height: calc(100vh - 58px);
+
+      display: grid;
+
+      grid-template-columns:
+        225px
+        minmax(0, 1fr)
+        265px;
+    }
+
+    /* =========================
+       LEFT SIDEBAR
+    ========================= */
+
+    .left-panel {
+      min-width: 0;
+
+      display: flex;
+      flex-direction: column;
+
+      border-right: 1px solid var(--border);
+
+      background: var(--panel);
+
+      overflow: hidden;
+    }
+
+    .panel-header {
+      height: 48px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 0 14px;
+
+      border-bottom: 1px solid var(--border);
+
+      color: #aaaaaf;
+
+      font-size: 11px;
+      font-weight: 800;
+
+      text-transform: uppercase;
+      letter-spacing: .7px;
+    }
+
+    .object-search {
+      margin: 10px;
+
+      width: calc(100% - 20px);
+      height: 34px;
+
+      padding: 0 10px;
+
+      outline: none;
+
+      border: 1px solid var(--border);
+      border-radius: 7px;
+
+      background: #101010;
+      color: #ffffff;
+
+      font-size: 11px;
+    }
+
+    .object-search::placeholder {
+      color: #5f5f65;
+    }
+
+    .object-list {
+      flex: 1;
+
+      padding: 0 9px 15px;
+
+      overflow-y: auto;
+    }
+
+    .object-category {
+      margin: 13px 5px 7px;
+
+      color: #5e5e64;
+
+      font-size: 9px;
+      font-weight: 850;
+
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .object-item {
+      width: 100%;
+      min-height: 38px;
+
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      margin-bottom: 4px;
+      padding: 0 10px;
+
+      border: 1px solid transparent;
+      border-radius: 7px;
+
+      background: transparent;
+      color: #a2a2a8;
+
+      cursor: grab;
+
+      text-align: left;
+
+      font-size: 11px;
+      font-weight: 650;
+
+      transition:
+        background .15s ease,
+        color .15s ease,
+        border-color .15s ease;
+    }
+
+    .object-item:hover {
+      background: var(--hover);
+      color: #ffffff;
+      border-color: var(--border);
+    }
+
+    .object-item:active {
+      cursor: grabbing;
+    }
+
+    .object-icon {
+      width: 24px;
+      height: 24px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 5px;
+
+      background: #181818;
+      color: #bbbbc0;
+
+      font-size: 11px;
+    }
+
+    /* =========================
+       CANVAS AREA
+    ========================= */
+
+    .canvas-area {
+      min-width: 0;
+
+      position: relative;
+
+      display: flex;
+      flex-direction: column;
+
+      background: #151515;
+    }
+
+    .canvas-toolbar {
+      height: 46px;
+
+      flex-shrink: 0;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      gap: 6px;
+
+      border-bottom: 1px solid var(--border);
+
+      background: #0d0d0d;
+    }
+
+    .tool-button {
+      width: 32px;
+      height: 30px;
+
+      display: grid;
+      place-items: center;
+
+      border: 1px solid transparent;
+      border-radius: 6px;
+
+      background: transparent;
+      color: #77777e;
+
+      cursor: pointer;
+
+      font-size: 12px;
+
+      transition:
+        background .15s ease,
+        color .15s ease,
+        border-color .15s ease;
+    }
+
+    .tool-button:hover {
+      color: #ffffff;
+      background: var(--hover);
+    }
+
+    .tool-button.active {
+      color: #ffffff;
+      background: var(--selected);
+      border-color: var(--border);
+    }
+
+    .device-separator {
+      width: 1px;
+      height: 22px;
+
+      margin: 0 7px;
+
+      background: var(--border);
+    }
+
+    .canvas-scroll {
+      flex: 1;
+
+      overflow: auto;
+
+      padding: 42px;
+
+      background:
+        radial-gradient(
+          circle at center,
+          rgba(255,255,255,.025),
+          transparent 55%
+        ),
+        #151515;
+    }
+
+    .canvas {
+      width: min(100%, 1000px);
+      min-height: 900px;
+
+      margin: 0 auto;
+
+      position: relative;
+
+      background: #ffffff;
+
+      color: #111111;
+
+      box-shadow:
+        0 25px 80px rgba(0,0,0,.4);
+
+      overflow: hidden;
+    }
+
+    /* =========================
+       PAGE OBJECTS
+    ========================= */
+
+    .page-section {
+      position: relative;
+
+      min-height: 260px;
+
+      padding: 70px 50px;
+
+      border: 1px dashed transparent;
+
+      transition:
+        border-color .15s ease,
+        background .15s ease;
+    }
+
+    .page-section:hover {
+      border-color: rgba(0,0,0,.15);
+    }
+
+    .page-section.selected {
+      border: 2px solid #111111;
+    }
+
+    .section-label {
+      position: absolute;
+
+      top: -1px;
+      left: -1px;
+
+      padding: 4px 7px;
+
+      background: #111111;
+      color: #ffffff;
+
+      font-size: 9px;
+      font-weight: 800;
+
+      opacity: 0;
+
+      pointer-events: none;
+    }
+
+    .page-section.selected .section-label {
+      opacity: 1;
+    }
+
+    .hero-object {
+      min-height: 430px;
+
+      display: flex;
+      flex-direction: column;
+
+      align-items: center;
+      justify-content: center;
+
+      text-align: center;
+
+      background:
+        linear-gradient(
+          135deg,
+          #f7f7f7,
+          #ffffff
+        );
+    }
+
+    .hero-object h1 {
+      max-width: 700px;
+
+      font-size: 54px;
+      line-height: 1;
+
+      letter-spacing: -3px;
+    }
+
+    .hero-object p {
+      max-width: 550px;
+
+      margin-top: 18px;
+
+      color: #666666;
+
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .hero-button {
+      margin-top: 25px;
+
+      padding: 12px 20px;
+
+      border-radius: 7px;
+
+      background: #111111;
+      color: #ffffff;
+
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .empty-section {
+      min-height: 220px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border: 2px dashed #dddddd;
+
+      color: #aaaaaa;
+
+      font-size: 13px;
+    }
+
+    /* =========================
+       RIGHT PANEL
+    ========================= */
+
+    .right-panel {
+      min-width: 0;
+
+      display: flex;
+      flex-direction: column;
+
+      border-left: 1px solid var(--border);
+
+      background: var(--panel);
+
+      overflow: hidden;
+    }
+
+    .properties {
+      flex: 1;
+
+      overflow-y: auto;
+    }
+
+    .property-group {
+      padding: 14px;
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .property-title {
+      margin-bottom: 13px;
+
+      color: #aaaaaf;
+
+      font-size: 10px;
+      font-weight: 850;
+
+      text-transform: uppercase;
+      letter-spacing: .7px;
+    }
+
+    .field {
+      margin-bottom: 11px;
+    }
+
+    .field:last-child {
+      margin-bottom: 0;
+    }
+
+    .field label {
+      display: block;
+
+      margin-bottom: 5px;
+
+      color: #66666d;
+
+      font-size: 9px;
+      font-weight: 700;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+
+      outline: none;
+
+      border: 1px solid var(--border);
+      border-radius: 6px;
+
+      background: #101010;
+      color: #ffffff;
+
+      font-size: 10px;
+    }
+
+    .field input,
+    .field select {
+      height: 31px;
+
+      padding: 0 8px;
+    }
+
+    .field textarea {
+      min-height: 65px;
+
+      padding: 8px;
+
+      resize: vertical;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--border-hover);
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+
+      gap: 7px;
+    }
+
+    .color-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .color-input {
+      width: 31px !important;
+      height: 31px !important;
+
+      padding: 2px !important;
+
+      cursor: pointer;
+    }
+
+    .selected-object {
+      padding: 10px;
+
+      border: 1px solid var(--border);
+      border-radius: 7px;
+
+      background: #101010;
+
+      color: #aaaaaf;
+
+      font-size: 10px;
+    }
+
+    /* =========================
+       BOTTOM STATUS
+    ========================= */
+
+    .statusbar {
+      height: 30px;
+
+      flex-shrink: 0;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 0 10px;
+
+      border-top: 1px solid var(--border);
+
+      background: #0b0b0b;
+
+      color: #5f5f65;
+
+      font-size: 9px;
+    }
+
+    .status-left,
+    .status-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* =========================
+       MOBILE MESSAGE
+    ========================= */
+
+    .mobile-message {
+      display: none;
+
+      position: fixed;
+      inset: 0;
+
+      z-index: 9999;
+
+      align-items: center;
+      justify-content: center;
+
+      padding: 25px;
+
+      background: #080808;
+
+      text-align: center;
+    }
+
+    .mobile-message-box {
+      max-width: 380px;
+    }
+
+    .mobile-message h1 {
+      font-size: 27px;
+      letter-spacing: -1px;
+    }
+
+    .mobile-message p {
+      margin-top: 12px;
+
+      color: #77777e;
+
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 850px) {
+      .builder {
+        grid-template-columns:
+          190px
+          minmax(0, 1fr);
+      }
+
+      .right-panel {
+        display: none;
+      }
+
+      .canvas-scroll {
+        padding: 25px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .mobile-message {
+        display: flex;
+      }
+
+      .builder,
+      .topbar {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================
+       TOP BAR
+  ========================= -->
+
+  <header class="topbar">
+
+    <div class="top-left">
+
+      <a
+        href="dashboard.html"
+        class="brand"
+      >
+        <span class="brand-mark">
+          LP
+        </span>
+
+        <span>
+          LPB
+        </span>
+      </a>
+
+      <span class="project-name">
+        Untitled Landing Page
+      </span>
+
+    </div>
+
+
+    <div class="top-center">
+
+      <button
+        class="top-button"
+        id="undoButton"
+        title="Undo"
+      >
+        ↶
+      </button>
+
+      <button
+        class="top-button"
+        id="redoButton"
+        title="Redo"
+      >
+        ↷
+      </button>
+
+      <span class="device-separator"></span>
+
+      <button
+        class="top-button active"
+        data-device="desktop"
+      >
+        Desktop
+      </button>
+
+      <button
+        class="top-button"
+        data-device="tablet"
+      >
+        Tablet
+      </button>
+
+      <button
+        class="top-button"
+        data-device="mobile"
+      >
+        Mobile
+      </button>
+
+    </div>
+
+
+    <div class="top-right">
+
+      <span
+        class="save-status"
+        id="saveStatus"
+      >
+        Saved
+      </span>
+
+      <button
+        class="top-button"
+        id="previewButton"
+      >
+        Preview
+      </button>
+
+      <button
+        class="top-button primary"
+        id="exportButton"
+      >
+        Export
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <!-- =========================
+       BUILDER
+  ========================= -->
+
+  <main class="builder">
+
+    <!-- LEFT OBJECT PANEL -->
+
+    <aside class="left-panel">
+
+      <div class="panel-header">
+        <span>
+          Objects
+        </span>
+      </div>
+
+
+      <input
+        type="search"
+        class="object-search"
+        id="objectSearch"
+        placeholder="Search objects..."
+      >
+
+
+      <div
+        class="object-list"
+        id="objectList"
+      >
+
+        <div class="object-category">
+          Layout
+        </div>
+
+        <button
+          class="object-item"
+          draggable="true"
+          data-object="section"
+        >
+          <span class="object-icon">
+            □
+          </span>
+
+          Section
+        </button>
+
+        <button
+          class="object-item"
+          draggable="true"
+          data-object="container"
+        >
+          <span class="object-icon">
+            ▣
+          </span>
+
+          Container
+        </button>
+
+
+        <div class="object-category">
+          Content
+        </div>
+
+        <button
+          class="object-item"
+          draggable="true"
+          data-object="heading"
+        >
+          <span class="object-icon">
+            H
+          </span>
+
+          Heading
+        </button>
+
+        <button
+          class="object-item"
+          draggable="true"
+          data-object="text"
+        >
+          <span class="object-icon">
+            T
+          </span>
+
+          Text
+        </button>
+
+        <button
+          class="object-item"
+          draggable="true"
+          data-object="button"
+        >
+          <span class="object-icon">
+            B
+          </span>
+
+          Button
+        </button>
+
+        <button
+          class="object-item"
+          draggable="true"
+          data-object="image"
+        >
+          <span class="object-icon">
+            I
+          </span>
+
+          Image
+        </button>
+
+        <button
+          class="object-item"
+          draggable="true"
+          data-object="video"
+        >
+          <span class="object-icon">
+            ▶
+          </span>
+
+          Video
+        </button>
+
+
+        <div class="object-category">
+          Components
+        </div>
+
+        <button
+          class="object-item"
+          draggable="true"
+          data-object="navbar"
+        >
+          <span class="object-icon">
+            N
+          </span>
+
+          Navbar
+        </button>
+
+        <button
+          class="object-item"
+          draggable="true"
+          data-object="hero"
+        >
+          <span class="object-icon">
+            ★
+          </span>
+
+          Hero
+        </button>
+
+        <button
+          class="object-item"
+          draggable="true"
+          data-object="features"
+        >
+          <span class="object-icon">
+            ◫
+          </span>
+
+          Features
+        </button>
+
+        <button
+          class="object-item"
+          draggable="true"
+          data-object="pricing"
+        >
+          <span class="object-icon">
+            $
+          </span>
+
+          Pricing
+        </button>
+
+        <button
+          class="object-item"
+          draggable="true"
+          data-object="testimonials"
+        >
+          <span class="object-icon">
+            “
+          </span>
+
+          Testimonials
+        </button>
+
+        <button
+          class="object-item"
+          draggable="true"
+          data-object="footer"
+        >
+          <span class="object-icon">
+            F
+          </span>
+
+          Footer
+        </button>
+
+
+        <div class="object-category">
+          Forms
+        </div>
+
+        <button
+          class="object-item"
+          draggable="true"
+          data-object="input"
+        >
+          <span class="object-icon">
+            _
+          </span>
+
+          Input
+        </button>
+
+        <button
+          class="object-item"
+          draggable="true"
+          data-object="form"
+        >
+          <span class="object-icon">
+            □
+          </span>
+
+          Form
+        </button>
+
+        <button
+          class="object-item"
+          draggable="true"
+          data-object="link"
+        >
+          <span class="object-icon">
+            ↗
+          </span>
+
+          Link
+        </button>
+
+      </div>
+
+    </aside>
+
+
+    <!-- CANVAS -->
+
+    <section class="canvas-area">
+
+      <div class="canvas-toolbar">
+
+        <button
+          class="tool-button active"
+          id="selectTool"
+          title="Select"
+        >
+          ↖
+        </button>
+
+        <button
+          class="tool-button"
+          id="moveTool"
+          title="Move"
+        >
+          ✥
+        </button>
+
+        <button
+          class="tool-button"
+          id="textTool"
+          title="Text"
+        >
+          T
+        </button>
+
+        <span class="device-separator"></span>
+
+        <button
+          class="tool-button"
+          id="zoomOut"
+          title="Zoom out"
+        >
+          −
+        </button>
+
+        <span
+          id="zoomValue"
+          style="
+            color:#77777e;
+            font-size:10px;
+            min-width:38px;
+            text-align:center;
+          "
+        >
+          100%
+        </span>
+
+        <button
+          class="tool-button"
+          id="zoomIn"
+          title="Zoom in"
+        >
+          +
+        </button>
+
+        <button
+          class="tool-button"
+          id="zoomReset"
+          title="Reset zoom"
+        >
+          1:1
+        </button>
+
+      </div>
+
+
+      <div
+        class="canvas-scroll"
+        id="canvasScroll"
+      >
+
+        <div
+          class="canvas"
+          id="canvas"
+          tabindex="0"
+        >
+
+          <!-- DEFAULT HERO -->
+
+          <section
+            class="page-section hero-object selected"
+            data-element="hero"
+          >
+
+            <span class="section-label">
+              Hero
+            </span>
+
+            <h1>
+              Build Something Great.
+            </h1>
+
+            <p>
+              Create beautiful landing pages
+              without writing a single line of code.
+            </p>
+
+            <span class="hero-button">
+              Get Started
+            </span>
+
+          </section>
+
+
+          <!-- DEFAULT EMPTY SECTION -->
+
+          <section
+            class="page-section"
+            data-element="section"
+          >
+
+            <span class="section-label">
+              Section
+            </span>
+
+            <div class="empty-section">
+              Drop an object here
+            </div>
+
+          </section>
+
+        </div>
+
+      </div>
+
+
+      <div class="statusbar">
+
+        <div class="status-left">
+
+          <span id="objectCount">
+            2 objects
+          </span>
+
+          <span>
+            Canvas
+          </span>
+
+        </div>
+
+        <div class="status-right">
+
+          <span>
+            1000px
+          </span>
+
+          <span id="cursorPosition">
+            0 × 0
+          </span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- RIGHT PROPERTIES PANEL -->
+
+    <aside class="right-panel">
+
+      <div class="panel-header">
+        <span>
+          Properties
+        </span>
+      </div>
+
+
+      <div class="properties">
+
+        <!-- SELECTED OBJECT -->
+
+        <div class="property-group">
+
+          <div class="property-title">
+            Selected Object
+          </div>
+
+          <div
+            class="selected-object"
+            id="selectedObject"
+          >
+            Hero Section
+          </div>
+
+        </div>
+
+
+        <!-- CONTENT -->
+
+        <div class="property-group">
+
+          <div class="property-title">
+            Content
+          </div>
+
+          <div class="field">
+
+            <label>
+              Heading
+            </label>
+
+            <input
+              type="text"
+              id="headingInput"
+              value="Build Something Great."
+            >
+
+          </div>
+
+          <div class="field">
+
+            <label>
+              Description
+            </label>
+
+            <textarea
+              id="descriptionInput"
+            >Create beautiful landing pages without writing a single line of code.</textarea>
+
+          </div>
+
+          <div class="field">
+
+            <label>
+              Button Text
+            </label>
+
+            <input
+              type="text"
+              id="buttonInput"
+              value="Get Started"
+            >
+
+          </div>
+
+        </div>
+
+
+        <!-- SIZE -->
+
+        <div class="property-group">
+
+          <div class="property-title">
+            Size
+          </div>
+
+          <div class="field-row">
+
+            <div class="field">
+
+              <label>
+                Width
+              </label>
+
+              <input
+                type="text"
+                id="widthInput"
+                value="100%"
+              >
+
+            </div>
+
+            <div class="field">
+
+              <label>
+                Height
+              </label>
+
+              <input
+                type="text"
+                id="heightInput"
+                value="430px"
+              >
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- SPACING -->
+
+        <div class="property-group">
+
+          <div class="property-title">
+            Spacing
+          </div>
+
+          <div class="field-row">
+
+            <div class="field">
+
+              <label>
+                Padding
+              </label>
+
+              <input
+                type="text"
+                id="paddingInput"
+                value="70px 50px"
+              >
+
+            </div>
+
+            <div class="field">
+
+              <label>
+                Margin
+              </label>
+
+              <input
+                type="text"
+                id="marginInput"
+                value="0"
+              >
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- TYPOGRAPHY -->
+
+        <div class="property-group">
+
+          <div class="property-title">
+            Typography
+          </div>
+
+          <div class="field">
+
+            <label>
+              Font Family
+            </label>
+
+            <select id="fontInput">
+
+              <option>
+                Inter
+              </option>
+
+              <option>
+                Arial
+              </option>
+
+              <option>
+                Georgia
+              </option>
+
+              <option>
+                Monospace
+              </option>
+
+            </select>
+
+          </div>
+
+          <div class="field-row">
+
+            <div class="field">
+
+              <label>
+                Size
+              </label>
+
+              <input
+                type="text"
+                id="fontSizeInput"
+                value="54px"
+              >
+
+            </div>
+
+            <div class="field">
+
+              <label>
+                Weight
+              </label>
+
+              <select id="fontWeightInput">
+
+                <option value="400">
+                  400
+                </option>
+
+                <option value="500">
+                  500
+                </option>
+
+                <option
+                  value="700"
+                  selected
+                >
+                  700
+                </option>
+
+                <option value="900">
+                  900
+                </option>
+
+              </select>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- COLORS -->
+
+        <div class="property-group">
+
+          <div class="property-title">
+            Colors
+          </div>
+
+          <div class="field">
+
+            <label>
+              Background
+            </label>
+
+            <div class="color-row">
+
+              <input
+                class="color-input"
+                type="color"
+                id="backgroundColor"
+                value="#ffffff"
+              >
+
+              <input
+                type="text"
+                id="backgroundColorText"
+                value="#ffffff"
+              >
+
+            </div>
+
+          </div>
+
+          <div class="field">
+
+            <label>
+              Text
+            </label>
+
+            <div class="color-row">
+
+              <input
+                class="color-input"
+                type="color"
+                id="textColor"
+                value="#111111"
+              >
+
+              <input
+                type="text"
+                id="textColorText"
+                value="#111111"
+              >
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- BORDER -->
+
+        <div class="property-group">
+
+          <div class="property-title">
+            Border
+          </div>
+
+          <div class="field-row">
+
+            <div class="field">
+
+              <label>
+                Width
+              </label>
+
+              <input
+                type="text"
+                id="borderWidth"
+                value="0"
+              >
+
+            </div>
+
+            <div class="field">
+
+              <label>
+                Radius
+              </label>
+
+              <input
+                type="text"
+                id="borderRadius"
+                value="0"
+              >
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </aside>
+
+  </main>
+
+
+  <!-- =========================
+       MOBILE MESSAGE
+  ========================= -->
+
+  <div class="mobile-message">
+
+    <div class="mobile-message-box">
+
+      <h1>
+        Builder needs a larger screen.
+      </h1>
+
+      <p>
+        LPB Builder membutuhkan layar yang lebih besar
+        agar visual editor dapat digunakan dengan nyaman.
+      </p>
+
+      <a
+        href="dashboard.html"
+        class="top-button primary"
+        style="
+          margin-top:20px;
+          display:inline-flex;
+        "
+      >
+        Back to Dashboard
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <script src="app-main.js"></script>
+  <script src="app-post.js"></script>
+
+</body>
+</html>
