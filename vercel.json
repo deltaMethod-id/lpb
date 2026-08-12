@@ -19,12 +19,8 @@
       "destination": "/downloads.html"
     },
     {
-      "source": "/api/main",
-      "destination": "/app-main.js"
-    },
-    {
-      "source": "/api/post",
-      "destination": "/app-post.js"
+      "source": "/api/services",
+      "destination": "/api/service.js"
     }
   ]
 }
